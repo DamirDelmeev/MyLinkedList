@@ -76,4 +76,64 @@ public class MyLinkedList<T> {
         }
     }
 
+    public void sort(Node<T> firstNode, Node<T> lastNode, int size) {
+        Node<T> pivotNode = lastNode;
+        Node<T> currentNode = firstNode;
+        for (int i = 0; i < size - 1; i++) {
+            Node<T> temporaryNode = getNextNode(currentNode);
+            if (pivotNode.compareTo(currentNode) <= 0) {
+                if (lastNode.getRightNode() != null) {
+                    changeLinkIfItsNotLastOrFirstNode(currentNode, currentNode.getRightNode(), currentNode.getLeftNode());
+                    currentNode.setRightNode(lastNode.getRightNode());
+                    lastNode.getRightNode().setLeftNode(currentNode);
+                    lastNode.setRightNode(currentNode);
+                    currentNode.setLeftNode(lastNode);
+                } else {
+                    changeLinkIfItsNotLastOrFirstNode(currentNode, currentNode.getRightNode(), currentNode.getLeftNode());
+                    currentNode.setRightNode(null);
+                    lastNode.setRightNode(currentNode);
+                    currentNode.setLeftNode(lastNode);
+                }
+                lastNode = currentNode;
+                currentNode = temporaryNode;
+                continue;
+            }
+            currentNode = getNextNode(currentNode);
+        }
+        firstNode = getFirstNode(firstNode);
+        if (firstNode.compareTo(pivotNode) != 0) {
+            sort(firstNode, pivotNode.getLeftNode(), getSizeBetweenTwoNodes(firstNode, pivotNode.getLeftNode()));
+        }
+        if (pivotNode.compareTo(lastNode) != 0) {
+            sort(pivotNode.getRightNode(), lastNode, getSizeBetweenTwoNodes(pivotNode.getRightNode(), lastNode));
+        }
+        this.firstNode = getFirstNode(firstNode);
+        this.lastNode = getLastNode(lastNode);
+    }
+
+    private Node<T> getFirstNode(Node<T> firstNode) {
+        Node<T> node = firstNode;
+        while (node.getLeftNode() != null) {
+            node = node.getLeftNode();
+        }
+        return node;
+    }
+
+    private Node<T> getLastNode(Node<T> lastNode) {
+        Node<T> node = lastNode;
+        while (node.getRightNode() != null) {
+            node = node.getRightNode();
+        }
+        return node;
+    }
+
+    private int getSizeBetweenTwoNodes(Node<T> firstNode, Node<T> leftNode) {
+        int result = 1;
+        Node<T> currentNode = firstNode;
+        while (!currentNode.equals(leftNode)) {
+            result++;
+            currentNode = getNextNode(currentNode);
+        }
+        return result;
+    }
 }
