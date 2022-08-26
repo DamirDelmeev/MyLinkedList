@@ -140,4 +140,14 @@ public class MyLinkedListImpl<T> implements MyLinkedList<T> {
         }
         return result;
     }
+
+    public String toString(int size) {
+        StringBuilder result = new StringBuilder();
+        Node<T> currentNode = firstNode;
+        for (int i = 0; i < size; i++) {
+            result.append(" ").append(currentNode.getValue().toString());
+            currentNode = getNextNode(currentNode);
+        }
+        return result.toString();
+    }
 }
