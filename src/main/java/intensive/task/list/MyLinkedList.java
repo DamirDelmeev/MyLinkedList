@@ -1,14 +1,13 @@
 package intensive.task.list;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+public interface MyLinkedList<T> {
+    void add(T t);
 
-@Getter
-@Setter
-@NoArgsConstructor
-public class MyLinkedList<T> {
-    private Node<T> firstNode;
-    private Node<T> lastNode;
-    private Integer size = 0;
+    boolean delete(T t);
+
+    T deleteFirst();
+
+    T deleteLast();
+
+    void sort();
 }
