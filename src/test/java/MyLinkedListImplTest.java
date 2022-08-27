@@ -1,22 +1,29 @@
 import intensive.task.list.MyLinkedListImpl;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
 public class MyLinkedListImplTest {
-    MyLinkedListImpl<Integer> myLinkedList = new MyLinkedListImpl<>();
+    private MyLinkedListImpl<Integer> myLinkedList;
 
-    @Test(timeout = 1)
-    public void testAddInteger() {
-        myLinkedList.add(1);
-        Assert.assertEquals(Optional.of(1).get(), myLinkedList.getSize());
+    @BeforeEach
+    public void beforeEach() {
+        myLinkedList = new MyLinkedListImpl<>();
     }
 
-    @Test(timeout = 1)
+    @Test()
+    public void testAddInteger() {
+        myLinkedList.add(1);
+        Assertions.assertEquals(Optional.of(1).get(), myLinkedList.getSize());
+    }
+
+    @Test()
     public void testDeleteInteger() {
+        myLinkedList.add(1);
         myLinkedList.delete(1);
-        Assert.assertEquals(0, (Object) myLinkedList.getSize());
+        Assertions.assertEquals(0, (Object) myLinkedList.getSize());
     }
 
     @Test()
@@ -27,6 +34,6 @@ public class MyLinkedListImplTest {
         myLinkedList.add(4);
         myLinkedList.add(1);
         myLinkedList.sort();
-        Assert.assertEquals(" 1 2 3 4 5", myLinkedList.toString(5));
+        Assertions.assertEquals(" 1 2 3 4 5", myLinkedList.toString(5));
     }
 }
